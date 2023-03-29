@@ -1,5 +1,6 @@
 package at.kaindorf.pojos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -11,6 +12,8 @@ public class Account {
     private  Long id;
     @Column(unique = true)
     private String email;
+
+    @JsonIgnore
     private String password;
 
 }
