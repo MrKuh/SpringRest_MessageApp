@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @Slf4j
-@RequestMapping(value ="/login",
+@RequestMapping(value ="/api/login",
         produces = MediaType.APPLICATION_JSON_VALUE)
 @CrossOrigin(origins = "*")
 public class LoginController{

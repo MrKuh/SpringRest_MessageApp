@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exam DB</title>
+    <script src="login.js"></script>
+</head>
+<body onload="onloadMethods()">
+<h1>Login</h1>
+
+<form method="post" action="/auth/login">
+    <label for="emailInput">Mail:</label><br>
+    <input type="email" id="emailInput" name="email" value="wajmia18@htl-kaindorf.at"><br>
+    <label for="passwordInput">Password:</label><br>
+    <input type="text" id="passwordInput" name="password" value="password"><br><br>
+    <input type="button" value="Login" onclick="loginMe()">
+    <input type="button" value="Register" onclick="registerMe()">
+    <input type="button" value="Token test" onclick="testToken()">
+</form>
+
+</body>
+</html>

@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 @RestController
 @Slf4j
-@RequestMapping(value ="/student",
+@RequestMapping(value ="/api/student",
         produces = MediaType.APPLICATION_JSON_VALUE)
 @CrossOrigin(origins = "*")
 public class StudentController {

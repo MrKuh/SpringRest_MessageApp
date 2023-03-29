@@ -29,12 +29,14 @@ public class Exa104SpringRestJpaExamDbApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		try {
 			Account user = new Account();
-			user.setEmail("noel@noel.de");
+			user.setEmail("renbea18@htl-kaindorf.at");
 			user.setPassword(passwordEncoder.encode("1234"));
 
-			Account saved = userRepository.save(user);
+			if(!userRepository.findByEmail(user.getEmail()).isPresent()){
+				Account saved = userRepository.save(user);
+				System.out.println(jwtTokenProvider.generateToken(saved.getEmail()));
+			}
 
-			System.out.println(jwtTokenProvider.generateToken(saved.getEmail()));
 		} catch (Exception e) {
 			//
 		}

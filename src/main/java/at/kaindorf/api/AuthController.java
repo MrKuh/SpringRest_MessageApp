@@ -4,6 +4,8 @@ import at.kaindorf.database.AccountRepository;
 import at.kaindorf.pojos.Account;
 import at.kaindorf.request.AuthRequest;
 import at.kaindorf.security.JwtTokenProvider;
+import com.google.gson.Gson;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,7 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping(value = "/auth",
+        produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuthController {
 
     private AccountRepository accountRepository;
@@ -28,6 +31,8 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
 
     private JwtTokenProvider jwtTokenProvider;
+
+    private static final Gson gson = new Gson();
 
     public AuthController(AccountRepository accountRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider) {
         this.accountRepository = accountRepository;
@@ -61,8 +66,9 @@ public class AuthController {
                         authRequest.getPassword()
                 )
         );
+        String token = jwtTokenProvider.generateToken(authentication);
 
-        return ResponseEntity.ok(jwtTokenProvider.generateToken(authentication));
+        return ResponseEntity.ok(gson.toJson(token));
     }
 
 }

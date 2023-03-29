@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @RestController
 @Slf4j
-@RequestMapping(value ="/exam",
+@RequestMapping(value ="/api/exam",
         produces = MediaType.APPLICATION_JSON_VALUE)
 @CrossOrigin(origins = "*")
 public class ExamController {

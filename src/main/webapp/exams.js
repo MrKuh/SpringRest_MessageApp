@@ -1,3 +1,14 @@
+let token;
+function getToken(){
+    var cookies =  document.cookie;
+    cookies.split(';').forEach(cookie => {
+        if(cookie.split('=')[0] === "token"){
+            token = cookie.split('=')[1];
+            console.log(token)
+        }
+    });
+}
+
 
 function displayExamBlock(display) {
     if(display){
@@ -14,21 +25,42 @@ function displayEditExamBlock(display) {
     }
 }
 
-
-
+function onloadMethods(){
+    getToken();
+    if(token != null){
+        console.log(token);
+        getAllClassNames();
+    }else{
+        window.location.href = "./login.html";
+    }
+}
 
 function getAllClassNames(){
-    fetch('./classname/all')
-    .then(response => response.json())
-    .then(data =>
-    {
-        let html = "";
-        data.forEach(d => html += `<option value=\"${d.classId}\">${d.classname}</option>`);
+    fetch('./api/classname/all',{
+        headers:{
+            Authorization: "Bearer " + token
+        }
+    })
+        .then(response =>
+        {
+            console.log(response.status )
+            if(response.status == 200){ //created
+                response.json().then(data => {
+                    let html = "";
+                    data.forEach(d => html += `<option value=\"${d.classId}\">${d.classname}</option>`);
 
 
-        document.getElementById("classnameSelect").innerHTML = html;
-        getStudentsOfClass(0);
-    });
+                    document.getElementById("classnameSelect").innerHTML = html;
+                    getStudentsOfClass(0);
+                });
+            }else{
+                console.log(token);
+            }
+
+
+        });
+
+
 }
 
 var page = 0;
@@ -61,7 +93,11 @@ function getStudentsOfClass(pageNo){
 
     console.log(classId);
 
-    fetch('./student/classname/' + classId + "?pageNo="+ pageNo)
+    fetch('./api/student/classname/' + classId + "?pageNo="+ pageNo,{
+        headers:{
+            Authorization: "Bearer " + token
+        }
+    })
     .then(response => response.json())
     .then(data =>
     {
@@ -96,7 +132,11 @@ function showExamsOfNewStudent(studentId, firstname, lastname){
 }
 
 function showExamsOfStudent(studentId, firstname, lastname){
-    fetch('./exam/student/' + studentId)
+    fetch('./api/exam/student/' + studentId,{
+        headers:{
+            Authorization: "Bearer " + token
+        }
+    })
         .then(response => response.json())
         .then(data =>
         {
@@ -122,7 +162,11 @@ function showExamsOfStudent(studentId, firstname, lastname){
 }
 
 function getAddExamRow(studentId){
-    fetch('./subject/all')
+    fetch('./api/subject/all',{
+        headers:{
+            Authorization: "Bearer " + token
+        }
+    })
         .then(response => response.json())
         .then(data =>
         {
@@ -154,11 +198,12 @@ function addExamToStudent(dateOfExamInput,durationInput,studentId,subjectInput){
         subjectId: subjectInput.value
     };
 
-    fetch('./exam',
+    fetch('./api/exam',
         {
             method:"POST",
             headers:{
-                "Content-Type":"application/json"
+                "Content-Type":"application/json",
+                Authorization: "Bearer " + token
             },
             body: JSON.stringify(exam)
         })
@@ -174,9 +219,12 @@ function addExamToStudent(dateOfExamInput,durationInput,studentId,subjectInput){
 
 function removeExamOfStudent(examId){
 
-    fetch('./exam/' + examId,
+    fetch('./api/exam/' + examId,
         {
-            method:"DELETE"
+            method:"DELETE",
+            headers:{
+                Authorization: "Bearer " + token
+            }
         })
         .then(response =>
         {
@@ -190,7 +238,11 @@ function removeExamOfStudent(examId){
 
 function getEditExamOfStudent(examId , studentId, dateOfExam, duration, subjectId){
 
-    fetch('./subject/all')
+    fetch('./api/subject/all',{
+        headers:{
+            Authorization: "Bearer " + token
+        }
+    })
         .then(response => response.json())
         .then(data =>
         {
@@ -229,11 +281,12 @@ function editExamOfStudent(examId, studentId , dateOfExamEditInput, durationEdit
         subjectId: subjectEditInput.value
     };
 
-    fetch('./exam/' + examId,
+    fetch('./api/exam/' + examId,
         {
             method:"PATCH",
             headers:{
-                "Content-Type":"application/json"
+                "Content-Type":"application/json",
+                Authorization: "Bearer " + token
             },
             body: JSON.stringify(exam)
         })
