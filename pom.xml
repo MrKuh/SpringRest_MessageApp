@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>Exa_104_SpringRest_JPA_ExamDB</artifactId>
+	<artifactId>ExamDB_App</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Exa_104_SpringRest_JPA_ExamDB</name>
 	<description>Exa_104_SpringRest_JPA_ExamDB</description>

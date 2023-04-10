@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Message App</title>
+    <script src="messageBoard.js"></script>
+</head>
+<body onload="reloadMessages()">
+    <table id="message-list">
+        <tbody id="message-table-body"></tbody>
+    </table>
+    <form>
+        <label>
+            Message
+            <input id="message-content"/>
+        </label>
+        <input type="button" value="Token test" onclick="addMessage()">
+    </form>
+</body>
+</html>

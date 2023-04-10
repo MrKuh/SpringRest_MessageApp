@@ -52,7 +52,7 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/**","/login.html","/login.js", "/examView.html","/exams.js")
+                .requestMatchers("/auth/**","/login.html","/login.js", "/messageBoard.html","/messageBoard.js", "/api/messages/all")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

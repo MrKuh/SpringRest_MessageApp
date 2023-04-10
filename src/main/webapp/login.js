@@ -12,7 +12,7 @@ function getToken(){
 function onloadMethods(){
     getToken();
     if(token != null){
-        window.location.href = "./examView.html";
+        window.location.href = "./messageBoard.html";
     }
 }
 
@@ -43,7 +43,7 @@ function loginMe(){
                 response.json().then(data => {
                     console.log(data);
                     setCookie("token",data, 0.1);
-                    window.location.href = "./examView.html";
+                    window.location.href = "./messageBoard.html";
                 });
             }else{
                 alert("Invalid Request " + response.status + " " + response.statusText);

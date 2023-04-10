@@ -30,6 +30,7 @@ public class JwtTokenProvider {
                     .setExpiration(Date.from(expiration))
                     .signWith(SignatureAlgorithm.HS256, jwtSecret.getBytes("UTF-8"))
                     .compact();
+
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
