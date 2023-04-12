@@ -20,6 +20,7 @@ public class JwtTokenProvider {
     private String jwtSecret;
 
     public String generateToken(String userEmail) {
+        //Get the current timestamp (Instant) and calculate the expiration time (7 days from now)
         Instant now = Instant.now();
         Instant expiration = now.plus(7, ChronoUnit.DAYS);
 
