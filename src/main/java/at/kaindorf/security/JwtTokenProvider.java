@@ -25,6 +25,8 @@ public class JwtTokenProvider {
         Instant expiration = now.plus(7, ChronoUnit.DAYS);
 
         try {
+            //Build the JWT using Jwts.builder() with the provided user email as the subject, issued at time, expiration time,
+            // and the signing algorithm (HS256) with the jwtSecret as the signing key
             return Jwts.builder()
                     .setSubject(userEmail)
                     .setIssuedAt(Date.from(now))
@@ -33,19 +35,23 @@ public class JwtTokenProvider {
                     .compact();
 
         } catch (UnsupportedEncodingException e) {
+            //Handle any exception that may occur during JWT generation
             throw new RuntimeException(e);
         }
 
     }
 
     public String generateToken(Authentication authentication) {
+        //Extract the user details (e.g., username) from the Authentication object
         User user = (User) authentication.getPrincipal();
+        //Call the generateToken() method with the extracted user's username as the parameter
         return generateToken(user.getUsername());
     }
 
     public String getUserMailFromToken(String token) {
         Claims claims = null;
         try {
+            //Parse the JWT token and retrieve the claims (e.g., subject, expiration, etc.)
             claims = Jwts
                     .parser()
                     .setSigningKey(jwtSecret.getBytes("UTF-8"))
@@ -54,7 +60,7 @@ public class JwtTokenProvider {
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
-
+//Extract the subject (i.e., user email or username) from the claims
         return claims.getSubject();
     }
 

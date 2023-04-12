@@ -15,9 +15,12 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException {
+        //Check if the request URI does not contain "classname"
         if(!request.getRequestURI().contains("message")){
+            //If not, redirect to "/login.html"
             response.sendRedirect("/login.html");
         }else{
+            //If yes, send HTTP error response with status code 401 (UNAUTHORIZED)
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
         }
 

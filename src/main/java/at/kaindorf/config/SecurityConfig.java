@@ -41,27 +41,27 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .cors()
+                .cors()// Enable Cross-Origin Resource Sharing (CORS) for the endpoints.
                 .and()
-                .csrf()
+                .csrf()// Disable Cross-Site Request Forgery (CSRF) protection.
                 .disable()
                 .exceptionHandling()
-                .authenticationEntryPoint(unauthorizedHandler)
+                .authenticationEntryPoint(unauthorizedHandler)// Set custom authentication entry point for handling unauthorized requests.
                 .and()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)// Configure session management to use stateless sessions.
                 .and()
-                .authorizeHttpRequests()
+                .authorizeHttpRequests()// Begin configuration for authorization rules for HTTP requests.
                 .requestMatchers("/auth/**","/login.html","/login.js", "/messageBoard.html","/messageBoard.js", "/api/messages/all")
-                .permitAll()
+                .permitAll()// Allow specified request matchers to be accessed without authentication.
                 .anyRequest()
-                .authenticated()
+                .authenticated()// Require authentication for any other requests that do not match the previous request matchers.
                 .and()
                 .formLogin()
-                .loginPage("/login.html");
+                .loginPage("/login.html");// Configure form-based login authentication and specify login page URL.
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-        return http.build();
+        return http.build();//Return the configured HttpSecurity object as a SecurityFilterChain bean.
     }
 
 }

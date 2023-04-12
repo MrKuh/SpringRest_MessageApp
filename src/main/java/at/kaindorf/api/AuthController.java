@@ -40,7 +40,8 @@ public class AuthController {
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
     }
-
+//The code first checks if an account with the given email already exists in the account repository by calling the
+    //"findByEmail" method on the "accountRepository" object, which returns an optional containing the account if found.
     @PostMapping(value = "/register")
     public ResponseEntity<Account> register(@RequestBody AuthRequest authRequest) {
         Optional<Account> userOptional = accountRepository.findByEmail(authRequest.getEmail());
@@ -57,7 +58,9 @@ public class AuthController {
 
         return ResponseEntity.ok(created);
     }
-
+    //The code first performs authentication by calling the "authenticate" method on the "authenticationManager" object.
+    //The "authenticationManager" is responsible for authenticating the user's credentials against the configured
+    //authentication provide.
     @PostMapping(value = "/login")
     public ResponseEntity<String> login(@RequestBody AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(
